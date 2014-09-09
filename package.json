@@ -1,0 +1,28 @@
+{
+	"name": "krakoa",
+	"version": "0.0.1",
+	"description": "A Koa App Boilerplate",
+	"main": "app.js",
+	"author": "Warren Haskins <warrenhaskins@gmail.com> (http://www.villainyhq.com/)",
+	"license": "MIT",
+	"dependencies" : {
+		"koa" : "*",
+		"koa-bodyparser" : "*",
+		"koa-router"  : "*",
+		"koa-resource-router" : "*",
+		"koa-passport" : "*",
+		"koa-session" : "*",
+		"koa-flash" : "*",
+		"koa-swig" : "*",
+		
+		"mongoose" : "3.8.*",
+		"passport-local" : "*",
+		"crypto" : "*",
+		"lodash" : "*",
+		"thunkify" : "*",
+		"node-mandrill" : "*",
+		"lodash" : "*",
+		"swig" : "*",
+		"moment" : "*"
+	}
+}

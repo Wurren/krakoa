@@ -1,0 +1,43 @@
+{% extends '../layout.liquid' %}
+
+{% block content %}
+
+<h1>Hey {{ token.user.email }}</h1>
+<p>Enter your shiny new password. Dont Forget this time!</p>
+
+
+{% if alive %}
+<form action="/forgotten/reset/{{ token.id }}" method="post">
+	<div class="field-wrap">
+		<label for="password">New Password</label>
+		<input type="password" name="password" class="field">
+	</div>
+	<div class="field-wrap">
+		<label for="confirm">Confirm New Password</label>
+		<input type="password" name="confirm" class="field">
+	</div>
+	<div class="submit-wrap">
+		<button>Submit</button>
+	</div>
+</form>
+{% else %}
+
+<p>Your password link has expired or does not exist - <a href="/forgotten">Create a new one now!</a></p>
+
+{% endif %}
+
+{% for error in errors %}
+	<div class="error">{{ error.message }}</div>
+{% endfor %}
+
+{% if error %}
+	<div class="error">{{ error }}</div>
+{% endif %}
+
+{% if message %}
+<div class="message">{{ message }}</div>
+{% endif %}
+
+<a href="/forgotten">Go Back</a>
+
+{% endblock%}
