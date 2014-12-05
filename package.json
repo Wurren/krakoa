@@ -24,5 +24,17 @@
           "lodash" : "*",
           "swig" : "*",
           "moment" : "*"
+     },
+    	"devDependencies" : {
+          "gulp": "*",
+          "gulp-watch" : "*",
+          "gulp-less": "*",
+          "gulp-minify-css": "*",
+          "gulp-notify": "*",
+          "gulp-uglify": "*",
+          "gulp-concat": "*",
+          "gulp-rename": "*",
+          "gulp-plumber" : "*",
+          "gulp-webserver" : "*"
      }
 }
