@@ -9,6 +9,7 @@ var  passport       = require('koa-passport'),
 | Local
 |--------------------------------------------------------------------------
 */
+
 module.exports = function(passport, User) {
      passport.use(new LocalStrategy({
           usernameField: "email",
