@@ -17,10 +17,10 @@ exports.welcome = function(user) {
      });
 
      var email = {
-          to:       [{ email: user.email, name: user.firstName || 'you', type: 'to' }],
-          from_email: Config.email.welcome.from,
+          to:       	[{ email: user.email, name: user.firstName || 'you', type: 'to' }],
+          from_email: 	Config.email.welcome.from,
           from_name:     Config.email.welcome.name,
-          subject:  Config.email.welcome.subject,
+          subject:  	Config.email.welcome.subject,
           html:          html    
      }
 
@@ -40,16 +40,16 @@ exports.welcome = function(user) {
 
 exports.forgotten = function(token) {
 
-     var html = swig.renderFile(process.cwd() + '/app/views/emails/forgotten.html', { 
+     var  html = swig.renderFile(process.cwd() + '/app/views/emails/forgotten.html', { 
           token: token,
           base_url: Config.base_url 
      });
 
      var email = {
-          to:       [{ email: token.user.email, name: token.user.firstName || 'you', type: 'to' }],
-          from_email: Config.email.forgotten.from,
+          to:       	[{ email: token.user.email, name: token.user.firstName || 'you', type: 'to' }],
+          from_email: 	Config.email.forgotten.from,
           from_name:     Config.email.forgotten.name,
-          subject:  Config.email.forgotten.subject,
+          subject:  	Config.email.forgotten.subject,
           html:          html    
      }
 
