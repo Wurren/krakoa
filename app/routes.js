@@ -5,66 +5,67 @@
 |--------------------------------------------------------------------------
 */
 
-var Resource 	= require('koa-resource-router'),
-	Root 		= require('./controllers/root'),
-	Users 		= require('./controllers/users'),
-	Auth  		= require('./controllers/auth'),
-	Admin  		= require('./controllers/admin'),
-	Signup 		= require('./controllers/signup');
+var  Resource       = require('koa-resource-router'),
+     Root           = require('./controllers/root'),
+     Users          = require('./controllers/users'),
+     Auth           = require('./controllers/auth'),
+     Admin          = require('./controllers/admin'),
+     Signup         = require('./controllers/signup');
 
 
 module.exports = function(app) {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Root
-	|--------------------------------------------------------------------------
-	*/
+     /*
+     |--------------------------------------------------------------------------
+     | Root
+     |--------------------------------------------------------------------------
+     */
 
-	app.get('/', Root.getIndex);
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| Resources
-	|--------------------------------------------------------------------------
-	*/
-
-	var users = new Resource('users', Users);
-	app.use(users.middleware());
+     app.get('/', Root.getIndex);
 
 
-	/*
-	|--------------------------------------------------------------------------
-	| Signup
-	|--------------------------------------------------------------------------
-	*/
+     /*
+     |--------------------------------------------------------------------------
+     | Resources
+     |--------------------------------------------------------------------------
+     */
 
-	app.get('/signup', Signup.getIndex);
+     var users = new Resource('users', Users);
+     app.use(users.middleware());
 
-	app.post('/signup', Signup.postIndex);
+
+     /*
+     |--------------------------------------------------------------------------
+     | Signup
+     |--------------------------------------------------------------------------
+     */
+
+     app.get('/signup', Signup.getIndex);
+
+     app.post('/signup', Signup.postIndex);
 
 
-	/*
-	|--------------------------------------------------------------------------
-	| Authentication
-	|--------------------------------------------------------------------------
-	*/
+     /*
+     |--------------------------------------------------------------------------
+     | Authentication
+     |--------------------------------------------------------------------------
+     */
 
-	app.all('/admin*', Auth.isAuthed);
+     app.all('/admin*', Auth.isAuthed);
 
-	app.get('/login', Auth.local);
+     app.get('/login', Auth.local);
 
-	app.post('/login', Auth.login);
+     app.post('/login', Auth.login);
 
-	app.get('/logout', Auth.logout);
+     app.get('/logout', Auth.logout);
 
-	app.get('/forgotten', Auth.forgottenIndex);
-	app.post('/forgotten', Auth.forgottenPost);
-	app.get('/forgotten/reset/:token', Auth.forgottenResetIndex);
-	app.post('/forgotten/reset/:token', Auth.forgottenReset);
+     app.get('/forgotten', Auth.forgottenIndex);
+     app.post('/forgotten', Auth.forgottenPost);
+     
+     app.get('/forgotten/reset/:token', Auth.forgottenResetIndex);
+     app.post('/forgotten/reset/:token', Auth.forgottenReset);
 
-	app.get('/admin', Auth.isAuthed, Admin.getIndex);
+     app.get('/admin', Auth.isAuthed, Admin.getIndex);
 
 
 }

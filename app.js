@@ -5,17 +5,17 @@
 |--------------------------------------------------------------------------
 */
 
-var 	koa        	= require('koa'),
-	bodyParser     = require('koa-bodyparser'),
-	session   	= require('koa-session'),
-	flash          = require('koa-flash'),
-	passport  	= require('koa-passport'),
-	router         = require('koa-router'),
-	render         = require('koa-swig'),
-	path           = require('path'),
-	mongoose 		= require('mongoose'),
-	_              = require('lodash'),
-	app       	= koa();
+var  koa            = require('koa'),
+     bodyParser     = require('koa-bodyparser'),
+     session        = require('koa-session'),
+     flash          = require('koa-flash'),
+     passport       = require('koa-passport'),
+     router         = require('koa-router'),
+     render         = require('koa-swig'),
+     path           = require('path'),
+     mongoose       = require('mongoose'),
+     _              = require('lodash'),
+     app            = koa();
 
 
 
@@ -25,7 +25,7 @@ var 	koa        	= require('koa'),
 |--------------------------------------------------------------------------
 */
 
-var Config = require('app/config/config');
+var Config = require('./app/config/config');
 
 app.use(bodyParser());
 app.keys = [Config.sessionKey];
@@ -43,10 +43,10 @@ app.use(router(app));
 */
 
 render(app, {
-	root: 		path.join(__dirname, 'app/views'),
-	autoescape: 	true,
-	cache: 		false,
-	ext: 		'liquid'
+     root:          path.join(__dirname, 'app/views'),
+     autoescape:    true,
+     cache:         false,
+     ext:           'liquid'
 });
 
 
@@ -60,18 +60,18 @@ render(app, {
 var User  = require('./app/models/user');
 
 _.each(['local'], function(file, index) {
-	require('./app/config/auth/' + file)(passport, User);
+     require('./app/config/auth/' + file)(passport, User);
 });
 
 passport.serializeUser(function(user, done) {
-	done(null, user._id);
+     done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-	User.findOne({ _id: id }, function (err, user) {
-		if(!err) done(null, user);
-		else done(err, null)  
-	});
+     User.findOne({ _id: id }, function (err, user) {
+          if(!err) done(null, user);
+          else done(err, null)  
+     });
 });
 
 
@@ -90,7 +90,7 @@ var routes = require('./app/routes.js')(app);
 |--------------------------------------------------------------------------
 */
 
-mongoose.connect(Config.Database);
+mongoose.connect(Config.database);
 
 
 /*
@@ -99,7 +99,9 @@ mongoose.connect(Config.Database);
 |--------------------------------------------------------------------------
 */
 
-app.listen(3000);
-console.log('Running...');
+app.listen(3000, function() {
+     console.log('Running...');
+});
+
 
 

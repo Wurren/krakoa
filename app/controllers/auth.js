@@ -1,9 +1,9 @@
 
 
-var	passport 	= require('koa-passport'),
-	User 		= require('../models/user'),
-	Token 		= require('../models/token'),
-	Moment 		= require('moment');
+var  passport       = require('koa-passport'),
+     User           = require('../models/user'),
+     Token          = require('../models/token'),
+     Moment         = require('moment');
 
 
 
@@ -14,7 +14,7 @@ var	passport 	= require('koa-passport'),
 */
 
 exports.local = function *() {
-	yield this.render('login', { error: this.flash.error });
+     yield this.render('login', { error: this.flash.error });
 }
 
 /*
@@ -24,17 +24,17 @@ exports.local = function *() {
 */
 
 exports.login = function *(next) {
-	var ctx = this
-	yield passport.authenticate('local', function*(err, user, info) {
-		if (err) throw err
-		if (user === false) {
-			ctx.flash = { error: 'Wrong Email/Password Bruh' };
-			ctx.redirect('/login');
-		} else {
-			yield ctx.login(user)
-			ctx.redirect('/admin');
-		}
-	}).call(this, next)
+     var ctx = this
+     yield passport.authenticate('local', function*(err, user, info) {
+          if (err) throw err
+          if (user === false) {
+               ctx.flash = { error: 'Wrong Email/Password Bruh' };
+               ctx.redirect('/login');
+          } else {
+               yield ctx.login(user)
+               ctx.redirect('/admin');
+          }
+     }).call(this, next)
 } 
 
 
@@ -45,86 +45,86 @@ exports.login = function *(next) {
 */
 
 exports.forgottenIndex = function *() {
-	yield this.render('forgotten/index', { errors: this.flash.errors });
+     yield this.render('forgotten/index', { errors: this.flash.errors });
 }
 
 exports.forgottenPost = function *() {
 
-	var email = this.request.body.email;
+     var email = this.request.body.email;
 
-	if ( email.length <= 0 ) {
-		this.flash = { errors: [{ message: 'Please enter a valid email!' }] };
-		return this.redirect('/forgotten');
-	}
+     if ( email.length <= 0 ) {
+          this.flash = { errors: [{ message: 'Please enter a valid email!' }] };
+          return this.redirect('/forgotten');
+     }
 
-	var user = yield User.findOne({ email : email }).exec();
+     var user = yield User.findOne({ email : email }).exec();
 
-	if( !user ) {
-		this.flash = { errors: [{ message: 'This account does not exist, sorry!' }] };
-		return this.redirect('/forgotten');
-	}
+     if( !user ) {
+          this.flash = { errors: [{ message: 'This account does not exist, sorry!' }] };
+          return this.redirect('/forgotten');
+     }
 
-	yield Token.create({
-		type: 'forgotten',
-		user: user._id
-	});
+     yield Token.create({
+          type: 'forgotten',
+          user: user._id
+     });
 
-	yield this.render('forgotten/index', { message: 'A reset password email is on the way!' });
+     yield this.render('forgotten/index', { message: 'A reset password email is on the way!' });
 
 }
 
 exports.forgottenResetIndex = function *() {
 
-	if( !this.params.token.match(/^[0-9a-fA-F]{24}$/) ) {
-		return yield this.render('forgotten/reset', { alive: false });
-	}
+     if( !this.params.token.match(/^[0-9a-fA-F]{24}$/) ) {
+          return yield this.render('forgotten/reset', { alive: false });
+     }
 
-	var token = yield Token.findById(this.params.token).populate('user').exec();
+     var token = yield Token.findById(this.params.token).populate('user').exec();
 
-	if(!token) {
-		return yield this.render('forgotten/reset', { alive: false });
-	}
+     if(!token) {
+          return yield this.render('forgotten/reset', { alive: false });
+     }
 
-	if (Moment(token.created_at).add('m', 30).isBefore(Moment())) {
-		return yield this.render('forgotten/reset', { alive: false });
-	}
+     if (Moment(token.created_at).add('m', 30).isBefore(Moment())) {
+          return yield this.render('forgotten/reset', { alive: false });
+     }
 
-	yield this.render('forgotten/reset', { alive: true, token: token, error: this.flash.error });
-	
-}	
+     yield this.render('forgotten/reset', { alive: true, token: token, error: this.flash.error });
+     
+}    
 
 
 exports.forgottenReset = function *() {
-	
-	var token = yield Token.findById(this.params.token).populate('user').exec();
+     
+     var token = yield Token.findById(this.params.token).populate('user').exec();
 
-	if ( token == null ) {
-		this.flash = { error: 'Something went wrong. Please try again.' };
-		return this.redirect('/forgotten/reset/' + token._id);
-	}
+     if ( token == null ) {
+          this.flash = { error: 'Something went wrong. Please try again.' };
+          return this.redirect('/forgotten/reset/' + token._id);
+     }
 
-	if ( this.request.body.password.length <= 0 ) {
-		this.flash = { error: 'You must enter a password' };
-		return this.redirect('/forgotten/reset/' + token._id);
-	}
+     if ( this.request.body.password.length <= 0 ) {
+          this.flash = { error: 'You must enter a password' };
+          return this.redirect('/forgotten/reset/' + token._id);
+     }
 
-	if ( this.request.body.password !== this.request.body.confirm ) {
-		this.flash = { error: 'Passwords Dont match!' };
-		return this.redirect('/forgotten/reset/' + token._id);
-	}
+     if ( this.request.body.password !== this.request.body.confirm ) {
+          this.flash = { error: 'Passwords Dont match!' };
+          return this.redirect('/forgotten/reset/' + token._id);
+     }
 
-	token.user.password = this.request.body.password;
+     token.user.password = this.request.body.password;
 
-	try {
-		yield token.user.persist();
-		token.remove();
-		this.redirect('/login');
-	}
+     try {
+          yield token.user.persist();
+          token.remove();
+          this.redirect('/login');
+     }
 
-	catch( error ) {
-		this.flash = { error: 'Something went wrong. Please try again.' };
-		return this.redirect('/forgotten/reset/' + token._id);
-	}
+     catch( error ) {
+          this.flash = { error: 'Something went wrong. Please try again.' };
+          return this.redirect('/forgotten/reset/' + token._id);
+     }
 
 }
 
@@ -137,8 +137,8 @@ exports.forgottenReset = function *() {
 */
 
 exports.logout = function *() {
-	this.logout();
-	this.redirect('/');
+     this.logout();
+     this.redirect('/');
 }
 
 
@@ -149,11 +149,11 @@ exports.logout = function *() {
 */
 
 exports.isAuthed = function *(next) {
-	if (this.isAuthenticated()) {
-		yield next
-	} else {
-		this.redirect('/')
-	}
+     if (this.isAuthenticated()) {
+          yield next
+     } else {
+          this.redirect('/')
+     }
 }
 
 

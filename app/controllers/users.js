@@ -7,29 +7,29 @@
 */
 
 exports.index = function *(){
-	this.body = ('user index');
+     this.body = ('user index');
 };
 
 exports.new = function *(){
-	this.body = 'new user';
+     this.body = 'new user';
 };
 
 exports.create = function *(){
-	this.body = 'create user';
+     this.body = 'create user';
 };
 
 exports.show = function *(){
-	this.body = 'show user ' + this.params.user;
+     this.body = 'show user ' + this.params.user;
 };
 
 exports.edit = function *(){
-	this.body = 'edit user ' + this.params.user;
+     this.body = 'edit user ' + this.params.user;
 };
 
 exports.update = function *(){
-	this.body = 'update user ' + this.params.user;
+     this.body = 'update user ' + this.params.user;
 };
 
 exports.destroy = function *(){
-	this.body = 'destroy user ' + this.params.user;
+     this.body = 'destroy user ' + this.params.user;
 };

@@ -7,5 +7,5 @@
 */
 
 exports.getIndex = function *() {
-	yield this.render('index', { helloworld: 'Boom!' });
+     yield this.render('index', { helloworld: 'Boom!' });
 }

@@ -1,7 +1,7 @@
 
 
-var User 	= require('../models/user'),
-	Errors 	= require('../services/errors');
+var  User      = require('../models/user'),
+     Errors    = require('../services/errors');
 
 /*
 |--------------------------------------------------------------------------
@@ -10,9 +10,9 @@ var User 	= require('../models/user'),
 */
 
 exports.getIndex = function *() {
-	yield this.render('signup', { 
-		errors : this.flash.errors 
-	});
+     yield this.render('signup', { 
+          errors : this.flash.errors 
+     });
 }
 
 /*
@@ -22,19 +22,19 @@ exports.getIndex = function *() {
 */
 
 exports.postIndex = function *() {
-	var params = this.request.body;
-	try {
-		var user = new User({
-			email: params.email,
-			password: params.password
-		});
-		yield user.persist();
-		this.redirect('/login');
-	} 
+     var params = this.request.body;
+     try {
+          var user = new User({
+               email: params.email,
+               password: params.password
+          });
+          yield user.persist();
+          this.redirect('/login');
+     } 
 
-	catch(error) {
-		this.flash =  { errors: Errors.convert(error.errors) };
-		this.redirect('/signup');
-	}
+     catch(error) {
+          this.flash =  { errors: Errors.convert(error.errors) };
+          this.redirect('/signup');
+     }
 }
 

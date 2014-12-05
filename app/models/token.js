@@ -1,7 +1,7 @@
 
-var	mongoose 	= require('mongoose'),
-	Schema 		= mongoose.Schema,
-	Email 		= require('../services/email');
+var  mongoose       = require('mongoose'),
+     Schema         = mongoose.Schema,
+     Email          = require('../services/email');
 
 /*
 |--------------------------------------------------------------------------
@@ -10,10 +10,10 @@ var	mongoose 	= require('mongoose'),
 */
 
 var tokenSchema = new Schema({
-	type: 			{ type: String },
-	user: 			{ type: Schema.Types.ObjectId, ref: 'User' },
-	created_at: 	{ type: Date, default: Date.now },
-	updated_at: 	{ type: Date, default: Date.now }
+     type:          { type: String },
+     user:          { type: Schema.Types.ObjectId, ref: 'User' },
+     created_at:    { type: Date, default: Date.now },
+     updated_at:    { type: Date, default: Date.now }
 });
 
 /*
@@ -23,9 +23,9 @@ var tokenSchema = new Schema({
 */
 
 tokenSchema.post('save', function(token) {
-	token.populate('user', function(err, token) {
-		Email.forgotten(token);
-	});
+     token.populate('user', function(err, token) {
+          Email.forgotten(token);
+     });
 });
 
 
