@@ -23,7 +23,7 @@ exports = module.exports = {
 	*/
 
 	email: {
-		mandrill_key: '',
+		mandrill_key: process.env.MANDRILL || '',
 		welcome: {
 			name: 'App',
 			from: 'app@app.com',
