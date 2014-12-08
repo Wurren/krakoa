@@ -2,12 +2,12 @@
 /*
 |--------------------------------------------------------------------------
 | Users Controller
-| This is More of an example of a Resource
+| Example Resource
 |--------------------------------------------------------------------------
 */
 
 exports.index = function *(){
-     this.body = ('user index');
+     this.body = 'user index';
 };
 
 exports.new = function *(){
