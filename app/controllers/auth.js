@@ -34,19 +34,26 @@ exports.login = function *(next) {
                yield ctx.login(user)
                ctx.redirect('/admin');
           }
-     }).call(this, next)
+     }).call(this, next);
 } 
 
 
 /*
 |--------------------------------------------------------------------------
-| Forgotten Password
+| Forgotten Password Index
 |--------------------------------------------------------------------------
 */
 
 exports.forgottenIndex = function *() {
      yield this.render('forgotten/index', { errors: this.flash.errors });
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| Forgotten Password Post
+|--------------------------------------------------------------------------
+*/
 
 exports.forgottenPost = function *() {
 
@@ -73,6 +80,14 @@ exports.forgottenPost = function *() {
 
 }
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Forgotten Password Reset Index
+|--------------------------------------------------------------------------
+*/
+
 exports.forgottenResetIndex = function *() {
 
      if( !this.params.token.match(/^[0-9a-fA-F]{24}$/) ) {
@@ -93,6 +108,13 @@ exports.forgottenResetIndex = function *() {
      
 }    
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Forgotten Password Reset Post
+|--------------------------------------------------------------------------
+*/
 
 exports.forgottenReset = function *() {
      
